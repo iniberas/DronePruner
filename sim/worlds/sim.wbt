@@ -1,0 +1,88 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/road/protos/StraightRoadSegment.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/Floor.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/Grass.proto"
+EXTERNPROTO "../protos/Iris.proto"
+
+WorldInfo {
+  title "Iris Ardupilot"
+  basicTimeStep 2
+  FPS 20
+}
+Viewpoint {
+  orientation 0.504500552255596 -0.4357326643986156 -0.7453966983760272 4.285590781837275
+  position 1.4698116530195189 -10.169512324084709 25.003278204049707
+  follow "Iris"
+  followSmoothness 0.01
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Floor {
+  size 300 100
+  appearance Grass {
+  }
+}
+StraightRoadSegment {
+  translation -15 0.3 0.02
+  rotation 0 0 1 0.105
+  width 16.5
+  rightBorder FALSE
+  leftBorder FALSE
+  length 140
+}
+Iris {
+  translation 0 0 0.09
+  controller "<extern>"
+  controllerArgs [
+    "--rangefinder-port"
+    "5556"
+    "--rangefinder"
+    "range_finder"
+    "--camera-port"
+    "5555"
+    "--camera"
+    "camera"
+    "--motors"
+    "m1_motor, m2_motor, m3_motor, m4_motor"
+  ]
+  extensionSlot [
+    RangeFinder {
+      translation 0.1 0 0
+      name "range_finder"
+      width 640
+      height 480
+      minRange 0.1
+      maxRange 20
+    }
+    Camera {
+      translation 0.1 0 0
+      fieldOfView 1
+      width 640
+      height 480
+    }
+  ]
+}
+Solid {
+  translation 6.67 -2.67378e-06 2.61
+  rotation -0.5773509358554485 0.5773489358556708 0.5773509358554485 -2.094395307179586
+  children [
+    Shape {
+      appearance Appearance {
+        texture ImageTexture {
+          url [
+            "../protos/textures/sengon.jpg"
+          ]
+        }
+      }
+      geometry Box {
+        size 6.4 4.8 0.1
+      }
+    }
+  ]
+  name "Sengon"
+}
