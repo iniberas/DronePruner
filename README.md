@@ -6,7 +6,6 @@
 
 ```sh
 git clone --recursive https://github.com/iniberas/DronePruner.git
-cd drone-pruner
 ```
 
 ### 2. Install ArduPilot prerequisites
