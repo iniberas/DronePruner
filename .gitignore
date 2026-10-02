@@ -1,11 +1,10 @@
 *.wbproj
-__pycache__
+__pycache__/
 worlds/.*
 *.pyc
 *.pyo
 .venv/
 venv/
-venv-ardupilot/
 
 eeprom.bin
 mav.parm

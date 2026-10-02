@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="sengon_board">
+    <static>true</static>
+    <link name="link">
+      <pose degrees="true">6.67 0 2.61 90 0 -90</pose>
+      <collision name="collision">
+        <geometry><box><size>4.8 4.8 0.1</size></box></geometry>
+      </collision>
+      <visual name="visual">
+        <geometry><box><size>4.8 4.8 0.1</size></box></geometry>
+        <material>
+          <ambient>1 1 1 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <specular>0 0 0 1</specular>
+          <pbr>
+            <metal>
+              <albedo_map>model://sengon_board/materials/textures/sengon.jpg</albedo_map>
+              <metalness>0.0</metalness>
+              <roughness>1.0</roughness>
+            </metal>
+          </pbr>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

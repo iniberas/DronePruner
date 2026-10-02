@@ -1,28 +1,6 @@
 ## Setup
 
-### 1. Install ArduPilot prerequisites
-
-Follow the official ArduPilot guide for your OS:
-
-- [Linux / Ubuntu](https://ardupilot.org/dev/docs/building-setup-linux.html)
-- [macOS](https://ardupilot.org/dev/docs/building-setup-mac.html)
-- [Windows (WSL)](https://ardupilot.org/dev/docs/building-setup-windows11.html)
-
-### 2. Install Webots
-
-Download and install from [https://cyberbotics.com](https://cyberbotics.com)
-
-### 3. Install PyTorch
-
-Pick one:
-
-```sh
-# CPU only
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
-
-# With GPU (CUDA)
-pip install torch torchvision
-```
+Download and install webots from [https://cyberbotics.com](https://cyberbotics.com)
 
 ## Run the Simulation
 

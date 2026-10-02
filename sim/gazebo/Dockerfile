@@ -44,6 +44,20 @@ RUN git clone https://github.com/ArduPilot/ardupilot_gazebo.git \
     && make -j$(nproc) \
     && make install
 
+RUN pip3 install --break-system-packages --no-cache-dir \
+        pymavlink torch torchvision --extra-index-url https://download.pytorch.org/whl/cpu
+
+RUN echo "numpy==1.26.4" > /etc/pip-constraints.txt
+ENV PIP_CONSTRAINT=/etc/pip-constraints.txt
+
+RUN pip3 install --break-system-packages --no-cache-dir --ignore-installed "pillow>=10.3.0" \
+    && pip3 install --break-system-packages --no-cache-dir \
+        gitpython pandas seaborn tqdm scipy "requests>=2.32.2" packaging \
+        cloudpickle polars nvidia-ml-py ultralytics-thop ultralytics-platform \
+    && pip3 install --break-system-packages --no-cache-dir --no-deps ultralytics
+
+ENV YOLOv5_AUTOINSTALL=false
+
 ENV GZ_SIM_SYSTEM_PLUGIN_PATH=/opt/ardupilot_gazebo/build:/usr/local/lib
 ENV GZ_SIM_RESOURCE_PATH=/opt/ardupilot_gazebo/models:/opt/ardupilot_gazebo/worlds
 
