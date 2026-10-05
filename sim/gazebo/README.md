@@ -3,7 +3,7 @@
 ### Build the Container
 
 ```sh
-docker build 
+docker compose build 
 ```
 
 ### Running the Container
@@ -11,7 +11,7 @@ docker build
 ```sh
 xhost +local:docker
 
-docker compose run --rm ros2-gazebo
+docker compose up -d
 ```
 
 ## Run the Simulation
@@ -21,7 +21,10 @@ Run these 4 commands each in a separate terminal:
 **Terminal 1: Gazebo + bridge**
 
 ```sh
+docker compose exec -it ros2-gazebo bash
 ros2 launch launch/sim.launch.py
+# klo mau yang apel
+ros2 launch launch/sim.launch.py world_file:=sim_apple.sdf
 ```
 
 **Terminal 2: ArduPilot SITL**
@@ -35,11 +38,6 @@ ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter -f gazebo-iris --model JSO
 ```sh
 docker compose exec -it ros2-gazebo bash
 python3 scripts/visual_servo.py
-```
-
-**Terminal 4: rqt_image_view**
-
-```sh
-docker compose exec -it ros2-gazebo bash
-ros2 run rqt_image_view rqt_image_view /ibvs/debug_image
+# kalo mau yang apel
+python3 scripts/visual_servo.py -p weights_path:=/opt/weights/yolov5s.pt
 ```

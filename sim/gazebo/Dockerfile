@@ -44,6 +44,14 @@ RUN git clone https://github.com/ArduPilot/ardupilot_gazebo.git \
     && make -j$(nproc) \
     && make install
 
+RUN apt-get update && apt-get install -y ros-jazzy-mavros ros-jazzy-mavros-extras \
+    && /opt/ros/jazzy/lib/mavros/install_geographiclib_datasets.sh
+
+RUN apt-get update && apt-get install -y \
+    ros-jazzy-joy \
+    joystick evtest \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN pip3 install --break-system-packages --no-cache-dir \
         pymavlink torch torchvision --extra-index-url https://download.pytorch.org/whl/cpu
 
@@ -62,6 +70,12 @@ ENV GZ_SIM_SYSTEM_PLUGIN_PATH=/opt/ardupilot_gazebo/build:/usr/local/lib
 ENV GZ_SIM_RESOURCE_PATH=/opt/ardupilot_gazebo/models:/opt/ardupilot_gazebo/worlds
 
 RUN echo "source /opt/ros/jazzy/setup.bash" >> /root/.bashrc
+
+RUN git clone --depth 1 https://github.com/ultralytics/yolov5.git /opt/yolov5
+
+RUN mkdir -p /opt/weights \
+    && wget -q -O /opt/weights/yolov5s.pt \
+       https://github.com/ultralytics/yolov5/releases/download/v7.0/yolov5s.pt
 
 WORKDIR /workspace
 CMD ["/bin/bash"]

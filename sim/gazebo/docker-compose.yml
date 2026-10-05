@@ -4,7 +4,7 @@ services:
   ros2-gazebo:
     build: .
     container_name: ros2-gazebo
-    network_mode: "host" 
+    network_mode: "host"
     privileged: true
     environment:
       - DISPLAY=${DISPLAY}
@@ -13,6 +13,7 @@ services:
       # - NVIDIA_DRIVER_CAPABILITIES=all
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /dev/input:/dev/input
       - ./:/workspace
-    stdin_open: true 
+    stdin_open: true
     tty: true
