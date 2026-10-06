@@ -39,5 +39,5 @@ ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter -f gazebo-iris --model JSO
 docker compose exec -it ros2-gazebo bash
 python3 scripts/visual_servo.py
 # kalo mau yang apel
-python3 scripts/visual_servo.py -p weights_path:=/opt/weights/yolov5s.pt
+python3 scripts/visual_servo.py -p weights_path:=/opt/weights/yolov5s.pt target_class_id:=47
 ```

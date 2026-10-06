@@ -1,8 +1,7 @@
 import time
 import rclpy
-from geometry_msgs.msg import TwistStamped
 from geometry_msgs.msg import PoseStamped
-from mavros_msgs.msg import State
+from mavros_msgs.msg import PositionTarget, State
 from mavros_msgs.srv import CommandBool, CommandTOL, SetMode
 from rclpy.qos import qos_profile_sensor_data
 
@@ -16,8 +15,8 @@ class MavrosLink:
         node.create_subscription(State, f"{ns}/state", self._on_state, qos_profile_sensor_data)
         node.create_subscription(PoseStamped, f"{ns}/local_position/pose",
                                  self._on_pose, qos_profile_sensor_data)
-        self.vel_pub = node.create_publisher(
-            TwistStamped, f"{ns}/setpoint_velocity/cmd_vel", 10)
+        self.sp_pub = node.create_publisher(
+            PositionTarget, f"{ns}/setpoint_raw/local", 10)
 
         self.cli_mode = node.create_client(SetMode, f"{ns}/set_mode")
         self.cli_arm = node.create_client(CommandBool, f"{ns}/cmd/arming")
@@ -130,11 +129,17 @@ class MavrosLink:
         self.request_mode("LAND")
 
     def send_body_velocity(self, vx, vy, vz, yaw_rate):
-        msg = TwistStamped()
+        msg = PositionTarget()
         msg.header.stamp = self.node.get_clock().now().to_msg()
         msg.header.frame_id = "base_link"
-        msg.twist.linear.x = float(vx)
-        msg.twist.linear.y = float(-vy)
-        msg.twist.linear.z = float(-vz)
-        msg.twist.angular.z = float(-yaw_rate)
-        self.vel_pub.publish(msg)
+        msg.coordinate_frame = PositionTarget.FRAME_BODY_OFFSET_NED
+        msg.type_mask = (
+            PositionTarget.IGNORE_PX | PositionTarget.IGNORE_PY | PositionTarget.IGNORE_PZ
+            | PositionTarget.IGNORE_AFX | PositionTarget.IGNORE_AFY | PositionTarget.IGNORE_AFZ
+            | PositionTarget.IGNORE_YAW
+        )
+        msg.velocity.x = float(vx)
+        msg.velocity.y = float(-vy)
+        msg.velocity.z = float(-vz)
+        msg.yaw_rate = float(-yaw_rate)
+        self.sp_pub.publish(msg)
